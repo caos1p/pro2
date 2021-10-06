@@ -59,7 +59,7 @@
 
 
 
-<section class="container " id="hospital">
+<section class="container-fluid " id="hospital" style="background-color: rgb(191, 247, 247)">
     <div class="row justify-content-center py-5">
           <div class="col-xl-8">
               <h2 class="text-center text-uppercase fw-600">Ten tu consulta en pocos pasos</h2>
@@ -86,16 +86,86 @@
   
     </div>
   </section>
+  <br>
   <section> 
     <div class="row">
         <div class="col-6" style="text-align: right">
             <a class="btn btn-primary btn-lg" href="login" role="button">INGRESAR AHORA</a>
         </div>
         <div class="col-6">
-            <button  type="button" class="btn btn-primary btn-lg">NUEVO USUARIO</button>
+      
+
+          <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            NUEVO USUARIO
+          </button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Registro</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="container-sm">
+       
+                    <form class="row g-3" action="{{route('usuario.store')}}" method="POST">
+                      @csrf
+                     
+                      
+                  
+                         
+                        <div class="col-sm-6">
+                          <label for="nombre">Nombre    </label>
+                            <input type="text" class="form-control" name="nombre" value="{{old('nombre')}}" required>
+                         
+                            @error('nombre')
+                             <span class="error">{{$message}}</span>
+                            @enderror
+                     
+                        </div>
+          
+                        <div class="col-sm-6">
+                          <label for="correo">Correo   </label>
+                         <input id="correo " class="form-control"  type="email"  name="email" value= "{{old('email')}}" required>          
+                         @error('email')
+                         <span class="error">{{$message}}</span>
+                         @enderror
+                        </div>
+              
+                    
+                        <div class="col-sm-12">
+                          <label for="password">Contraseña   </label>
+                       <input id="password "type="password" class="form-control" name="password" value="{{old('password')}}" required>
+                        @error('password')
+                        <span class="error">{{$message}}</span>
+                        @enderror
+                      </div>
+          
+                     <div class="card-action right-align">
+                      <button type="submit" class="btn btn-danger" onclick="showProgress()">Guardar</button>
+                     
+            
+            </div>  
+           </form>
+          </div>
+          
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
         </div>
     </div>
 </section>
+ 
   <section class="container py-5" id="hospital">
     <div class="row py-5">
         <div class="col-lg-8">

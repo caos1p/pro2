@@ -27,12 +27,17 @@
           <span  class="navbar-toggler-icon " ></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <li><a style="font-size: 20px ; color: rgb(34, 56, 99)" href="logout">CERRAR SESION</a></li>
-
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="home">Home</a>
+              <a class="nav-link active" aria-current="page" href="logout">Cerrar Sesion</a>
             </li>  
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="usuario">Usuario</a>
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="">CERO</a>
+            </li>  
+        
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Dropdown link
@@ -53,8 +58,7 @@
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-   <script src="  https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"></script>
-   <script src="  https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css"></script>
+
    @yield('contenido')
   </body>
 </html>
