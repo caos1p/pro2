@@ -28,7 +28,7 @@ class UsuarioController extends Controller
 
     public function index()
     {
-        $errors=User::all();
+        $errors=User::get();
         return view('usuario.index',['errors'=>$errors]);
     }
 
