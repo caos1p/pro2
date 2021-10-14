@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+Route::get('cita', function () {
+    return view('cita');
+});
 
 Route::get('/login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')-> name('login');
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login')-> name('login');
@@ -30,3 +34,7 @@ Route::get('/usuario/{id}', [UsuarioController::class, 'show'])-> name('usuario.
 Route::get('/usuario/{id}/edit', [UsuarioController::class, 'edit'])-> name('usuario.edit');
 Route::put('/usuario/{id}', [UsuarioController::class, 'update'])-> name('usuario.update');
 Route::get('/usuario/{id}/destroy', [UsuarioController::class, 'destroy'])-> name('usuario.destroy');
+
+Route::get('/paciente', [PacienteController::class, 'index'])-> name('paciente.index');
+Route::get('/paciente/create', [PacienteController::class, 'create'])-> name('paciente.create');
+Route::post('/paciente', [PacienteController::class, 'store'])-> name('paciente.store');

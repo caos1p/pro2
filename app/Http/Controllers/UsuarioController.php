@@ -39,6 +39,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
+        
        
         return view('usuario.create');
 
@@ -120,6 +121,7 @@ class UsuarioController extends Controller
         $users=User::findOrFail($id);
         $users->name=$request->input('nombre');
         $users->email=$request->input('email');
+        $users->tipo='personal';
         $users->password=bcrypt($request->input('password'));
         $users->rol_id=$request->input('rol_id');  
         $users->save();
