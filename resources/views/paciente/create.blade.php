@@ -73,7 +73,7 @@
               </div>
               <div class="col-md-6">
                 <label for="fechadenacimiento">Fecha de Nacimiento    </label>
-                  <input type="text" id="a" class="form-control" name="fechadenacimiento" value="{{old('fechadenacimiento')}}">
+                  <input type="date" id="a" class="form-control" name="fechadenacimiento" value="{{old('fechadenacimiento')}}">
                
                   @error('fechadenacimiento')
                    <span class="error">{{$message}}</span>
@@ -120,8 +120,7 @@
 
 
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
 <script>
  $( function() {
     $( "#a" ).datepicker({

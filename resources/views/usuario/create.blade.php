@@ -37,6 +37,17 @@
               @enderror
             </div>
 
+            <div class="input-field col s12">
+              <select name="rol_id" >
+                  <option value="" disable selected>seleccione una opcion</option>
+                  @foreach($rol as $ro)
+                  <option value="{{$ro->id}}">{{$ro->nombrederol}}</option>
+    
+                  @endforeach
+              </select>
+                  <label>Seleccione un tipo de rol:</label>
+                </div>
+                
            <div class="card-action right-align">
             <button type="submit" class="btn btn-danger" onclick="showProgress()">Guardar</button>
            

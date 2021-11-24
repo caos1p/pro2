@@ -34,11 +34,42 @@ class HorarioController extends Controller
     {
         $horario=new Horario();
         $horario->horaentrada=$request->input('horaentrada');
-        $horario->horasalida=$request->input('horasalida');
+        $horario->horadesalida=$request->input('horadesalida');
         $horario->turno=$request->input('turno');
         $horario->save();
         return redirect()->route('horario.index');
 
 
     }
+    public function edit($id)
+    { 
+        $horario=Horario::findOrFail($id);
+
+        return view('horario.edit',['horario'=>$horario]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $horario= Horario::findOrFail($id);
+        $horario->horaentrada=$request->input('horaentrada');
+        $horario->horadesalida=$request->input('horadesalida');
+        $horario->turno=$request->input('turno');
+        $horario->save();
+        return redirect()->route('horario.index');
+    }
+
+
+    public function destroy($id)
+   {
+       $persona=Horario::findOrFail($id);
+       $persona->delete();
+       return redirect()->route('horario.index');
+   }
 }

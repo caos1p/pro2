@@ -26,4 +26,8 @@ class Personal extends Model
     {
         return $this->belongsTo(Cargo::class,'cargo_id');
     }
+    public function agenda()
+    {
+        return $this->hasMany(Agenda::class,'personal_id');
+    }
 }

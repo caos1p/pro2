@@ -21,12 +21,14 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
+    protected function redirectTo()
+    {
+        if (auth()->user()->rol_id== 3) {
+            return '/vistadecita';
+        }
+        return '/agenda';
+        
+    }
 
     /**
      * Create a new controller instance.

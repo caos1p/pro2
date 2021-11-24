@@ -6,43 +6,39 @@
     
 </body>
 <div class="container">
-<div class="row">
+<div class="row"  style="color: white">
     
     <div class="col-sm-4"></div>
-<div class=" col-sm-4" style="background-color:  rgb(225, 230, 236)">
+<div class=" col-sm-4" style="background-color:  rgb(1, 16, 31)">
 <div class="row" style="align-content: center">
    
-    <h3 style="color: rgb(247, 242, 242); width: 100%; text-align: center ;background-color: rgb(155, 135, 127);height: 60px;">Ingresar A Mi Cuenta </h3>
-   
+    <h2 style="color: rgb(250, 246, 246); width: 100%;padding: 3%; text-align: center ;height: 60px;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Ingresar A Mi Cuenta </h2><hr>
+   <br>
     <form action="login" method="POST">
      @csrf
-      <div  style="margin: 0% 3%;">
-        <div  style="width: 100% ;text-align: center;">
-             <img height="80px" src="https://cdn0.iconfinder.com/data/icons/bubbly-icons/512/User_Account_Avatar_Person_Profile_Login_Persona-512.png" >
-        </div> 
-    </div>
-      
+ 
+      <br>
     <div class="row " style="width: 100%;">
     <div class="col-12" style="text-align: left" >
-       <h5> eMail:  <i class="bi bi-envelope"></i></h5>
-       <input  style="color: rgb(17, 16, 16);font-size: 25px;width: 100%;border-color: red" id="email" type="email" class="validate" name="email" placeholder="">
+       <h5> Email:  <i class="bi bi-envelope"></i></h5>
+       <input required  style="color: rgb(17, 16, 16);font-size: 25px;width: 100%;border-color: rgb(247, 244, 244)" id="email" type="email" class="validate" name="email" placeholder="">
 
     </div>
        <br>
        <br>
-       <br>
+       
        
      
        <div class="col-12" style="text-align: left" >
         <h5> Password:     <i class="bi bi-lock-fill"></i> </h5>
     
-       <input style="color: rgb(7, 7, 7);font-size: 25px;width: 100%;border-color: red" id="password" type="password" class="validate" name="password" placeholder="" >
+       <input required style="color: rgb(7, 7, 7);font-size: 25px;width: 100%;border-color: red" id="password" type="password" class="validate" name="password" placeholder="" >
      </div>
     </div>
        <br>
        
        
-       <button  style="width: 100%; background: rgb(155, 135, 127);height: 90px;color: white;font-size: 40px;font-family: 'Courier New', Courier, monospace" class="">Iniciar</button>
+       <button style="width: 100%; background: rgb(155, 135, 127);height: 70px;padding: 2%; color: white;font-size: 40px;font-family: 'Courier New', Courier, monospace" class="btn btn-primary btn-lg">Iniciar</button>
   <br>
   <br>
        
@@ -58,6 +54,7 @@
 </div>
 <br>
 </div>
+
 
 </div>
 

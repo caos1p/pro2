@@ -69,16 +69,17 @@
     <div class="row pb-3">
       <div class="col-sm-12 col-md-6 col-lg-3 text-center step">
         <img src="https://hospitalprivado.com.ar/frontend/landing-ads/images/step-1.png" alt="Hospital Privado Cordoba" class="d-block mx-auto"/>
-        <p class="ls--2 lh-150"><strong>Completa el formulario</strong> y selecciona el servicio sobre el cual deseas recibir más información, ya sea consulta por telemedicina o segunda opinión médica.</p>
+        <p class="ls--2 lh-150"><strong>Completa el formulario</strong> y selecciona el servicio sobre el cual deseas recibir más información, ya sea consulta por telemedicina </p>
       </div>
       <div class="col-sm-12 col-md-6 col-lg-3 text-center step">
         <img src="https://hospitalprivado.com.ar/frontend/landing-ads/images/step-2.png" alt="Hospital Privado Cordoba" class="d-block mx-auto"/>
-        <p class="ls--2 lh-150"><strong>Aguarda el contacto</strong> de nuestros asesores, con quienes coordinarán contigo la consulta.</p>
+        <p class="ls--2 lh-150"><strong>Registra el dia y hora para tu cita</strong> .</p>
       </div>
       <div class="col-sm-12 col-md-6 col-lg-3 text-center step">
         <img src="https://hospitalprivado.com.ar/frontend/landing-ads/images/step-3.png" alt="Hospital Privado Cordoba" class="d-block mx-auto"/>
         <p class="ls--2 lh-150">Para confirmar tu cita médica online, <strong>abona el monto</strong> establecido de 15BS mediante la forma de pago indicada.</p>
       </div>
+  
       <div class="col-sm-12 col-md-6 col-lg-3 text-center step">
         <img src="https://hospitalprivado.com.ar/frontend/landing-ads/images/step-4.png" alt="Hospital Privado Cordoba" class="d-block mx-auto"/>
         <p class="ls--2 lh-150">¡<strong>Recibe la consulta</strong> por telemedicina de nuestro especialista en el día y horario acordado!</p>
@@ -90,13 +91,12 @@
   <section> 
     <div class="row">
         <div class="col-6" style="text-align: right">
-            <a class="btn btn-primary btn-lg" href="login" role="button">INGRESAR AHORA</a>
+            <a class="btn btn-primary btn-lg"  href="/login" role="button">INGRESAR AHORA</a>
         </div>
         <div class="col-6">
       
 
          <a class="btn btn-primary btn-lg" href="paciente/create">REGISTRAR NUEVO</a>
-          
         
 
 

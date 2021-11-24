@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('tipo');
             $table->rememberToken();
             $table->timestamps();
+            $table->unsignedBigInteger('rol_id')->nullable() ;
+            $table->foreign('rol_id')->on('rol')->references('id')->onDelete('cascade');
         });
     }
 

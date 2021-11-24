@@ -14,24 +14,29 @@ use App\Models\User;
 use Carbon\Carbon;
 use CreatePersonasTable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UsuarioController extends Controller
 {
-    public static $TIPO_USUARIO=1;
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function indexpaciente()
     {
-        $errors=User::get();
-        return view('usuario.index',['errors'=>$errors]);
+        $errors=User:: where('tipo', 'paciente')-> orderBy('id','desc')-> paginate(10);
+        return view('usuario.indexpaciente',['errors'=>$errors]);  
     }
-
+    public function indexmedico()
+    {   $errors=User:: where('tipo','<>', 'paciente')-> orderBy('id','desc')-> paginate(10);
+       
+        return view('usuario.indexmedico',['errors'=>$errors]);
+     
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -40,8 +45,8 @@ class UsuarioController extends Controller
     public function create()
     {
         
-       
-        return view('usuario.create');
+        $rol=Rol::all();
+        return view('usuario.create',['rol'=>$rol]);
 
     }
 
@@ -59,6 +64,7 @@ class UsuarioController extends Controller
         $users=new User();
         $users->name= $request->input('nombre');
         $users->email= $request->input('email');
+        $users->tipo='medico';
         $users->password=bcrypt($request->input('password'));
         $users->save();
         return redirect()->route('/');

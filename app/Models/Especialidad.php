@@ -13,4 +13,9 @@ class Especialidad extends Model
     {
         return $this->hasMany(Personal::class,'especialidad_id');
     }
+    public function citamedica()
+    {
+        return $this->hasMany(Citamedica::class,'especialidad_id');
+    }
+
 }

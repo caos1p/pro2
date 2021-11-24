@@ -9,6 +9,10 @@ class Cargo extends Model
 {
     use HasFactory;
     protected $table='cargo';
+    protected $fillable = [
+        'nombre','sueldo',
+      
+    ];
     public function personal()
     {
         return $this->hasMany(Personal::class,'cargo_id');

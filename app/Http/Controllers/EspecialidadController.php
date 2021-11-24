@@ -21,7 +21,7 @@ class EspecialidadController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {                 
         return view('especialidad.create');
     }
 
@@ -35,10 +35,41 @@ class EspecialidadController extends Controller
     {
         $especialidad=new Especialidad();
         $especialidad->nombre=$request->input('nombre');
+        $especialidad->descripcion=$request->input('descripcion');
         $especialidad->save();
         return redirect()->route('especialidad.index');
 
 
     }
+    public function edit($id)
+    { 
+        $especialidad=Especialidad::findOrFail($id);
+        
 
+        return view('especialidad.edit',['especialidad'=>$especialidad]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $especialidad= Especialidad::findOrFail($id);
+        $especialidad->nombre=$request->input('nombre');
+        $especialidad->descripcion=$request->input('descripcion');
+        $especialidad->save();
+        return redirect()->route('especialidad.index');
+    }
+
+
+    public function destroy($id)
+   {
+       $persona=Especialidad::findOrFail($id);
+       $persona->delete();
+       return redirect()->route('especialidad.index');
+   }
 }
