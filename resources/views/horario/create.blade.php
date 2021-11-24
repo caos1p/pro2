@@ -4,7 +4,7 @@
 <h3 style="text-align: center"> formulario de creacion</h3><hr>
    <div class="container-sm">
        
-          <form class="row g-3" action="{{route('personal.store')}}" method="POST">
+          <form class="row g-3" action="{{route('horario.store')}}" method="POST">
             @csrf
            
             
