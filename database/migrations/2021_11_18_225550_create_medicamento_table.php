@@ -18,8 +18,7 @@ class CreateMedicamentoTable extends Migration
             $table->string( 'nombre');
             $table->string( 'descripcion');
             $table->timestamps();
-            $table->unsignedBigInteger('recetamedica_id')->nullable() ;
-            $table->foreign('recetamedica_id')->on('recetamedica')->references('id')->onDelete('cascade');
+         
         });
     }
 

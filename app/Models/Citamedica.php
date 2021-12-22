@@ -14,6 +14,11 @@ class Citamedica extends Model
     {
         return $this->hasMany(Agenda::class,'citamedica_id');
     }
+    
+    public function diagnostico()
+    {
+        return $this->hasMany(Diagnostico::class,'citamedica_id');
+    }
     public function paciente()
     {
         return $this->belongsTo(Paciente::class,'paciente_id');
@@ -21,5 +26,9 @@ class Citamedica extends Model
     public function especialidad()
     {
         return $this->belongsTo(Especialidad::class,'especialidad_id');
+    }
+    public function personal()
+    {
+        return $this->belongsTo(Personal::class,'personal_id');
     }
 }

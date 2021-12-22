@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\crearrol;
+use App\Models\Personal;
 use App\Models\Rol;
+use App\Models\User;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Constraint\Count;
 
 class RolController extends Controller
-{
+{  public function __construct()
+	{
+		$this->middleware('auth');
+	} 
       /**
      * Display a listing of the resource.
      *
@@ -15,8 +22,8 @@ class RolController extends Controller
 
     public function index()
     {
-        $roles=Rol::orderBy('id','desc')-> paginate(10);
-        return view('rol.index',['roles'=>$roles]);
+        $roles=Rol::orderBy('id','asc')-> paginate(10);
+        return view('administrador.rol.index',['roles'=>$roles]);
     }
 
     /**
@@ -26,7 +33,7 @@ class RolController extends Controller
      */
     public function create()
     {
-        return view('rol.create');
+        return view('administrador.rol.create');
     }
 
     /**
@@ -40,6 +47,8 @@ class RolController extends Controller
         $rol=new Rol();
         $rol->nombre=$request->input('nombre');
         $rol->save();
+        event(new crearrol($rol));
+
         return redirect()->route('rol.index');
 
 
@@ -49,7 +58,7 @@ class RolController extends Controller
         $rol=Rol::findOrFail($id);
         
 
-        return view('rol.edit',['rol'=>$rol]);
+        return view('administrador.rol.edit',['rol'=>$rol]);
     }
 
     /**
@@ -68,8 +77,17 @@ class RolController extends Controller
     }
     public function destroy($id)
     {
-        $persona=Rol::findOrFail($id);
-        $persona->delete();
-        return redirect()->route('rol.index');
+        
+            
+            $idp=User::where('rol_id', $id)->pluck('id')->first();
+            if($idp>0){
+               
+                return redirect()->route('rol.index')->with(['message'=>'No se puede eliminar por que otros registros dependen de este elemento ']);
+        }
+                $persona=Rol::findOrFail($id);
+                $persona->delete();
+                return redirect()->route('rol.index')->with(['messages'=>'Se elimino correctamente']);
+            
+  
     }
 }

@@ -10,7 +10,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 class PersonalController extends Controller
-{
+{ public function __construct()
+	{
+		$this->middleware('auth');
+	} 
        /**
      * Display a listing of the resource.
      *
@@ -24,7 +27,7 @@ class PersonalController extends Controller
         $personal->load('especialidad');
         $personal->load('horario');
 
-        return view('personal.index',['personal'=>$personal]);
+        return view('administrador.personal.index',['personal'=>$personal]);
     }
 
     /**
@@ -42,7 +45,7 @@ class PersonalController extends Controller
 
 
       
-        return view('personal.create',['personal'=>$personal,'rol'=>$rol,'horario'=>$horario,'especial'=>$especial]);       
+        return view('administrador.personal.create',['personal'=>$personal,'rol'=>$rol,'horario'=>$horario,'especial'=>$especial]);       
 
     }
 
@@ -94,8 +97,10 @@ class PersonalController extends Controller
         $personal=Personal::findOrFail($id);
         
 
-        return view('personal.edit',['personal'=>$personal,'horario'=>$horario,'usuario'=>$usuario]);
+        return view('administrador.personal.edit',['personal'=>$personal,'horario'=>$horario,'usuario'=>$usuario]);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -122,9 +127,12 @@ class PersonalController extends Controller
     }
     public function destroy($id)
     {
+        $idu=Personal::where('id', $id)->pluck('usuario_id')->first();
         $persona=Personal::findOrFail($id);
+        $user=User::findOrFail($idu);
         $persona->delete();
-        return redirect()->route('personal.index');
+        $user->delete();
+        return redirect()->route('personal.index')->with(['messages'=>'Se elimino correctamente']);
     }
 
 }

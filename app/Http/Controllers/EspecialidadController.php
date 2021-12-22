@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Especialidad;
+use App\Models\Personal;
 use Illuminate\Http\Request;
 
 class EspecialidadController extends Controller
-{
+{  public function __construct()
+	{
+		$this->middleware('auth');
+	} 
      
     public function index()
     {
         $especialidad=Especialidad::all();
 
-        return view('especialidad.index',['especialidad'=>$especialidad]);
+        return view('administrador.especialidad.index',['especialidad'=>$especialidad]);
     }
 
     /**
@@ -22,7 +26,7 @@ class EspecialidadController extends Controller
      */
     public function create()
     {                 
-        return view('especialidad.create');
+        return view('administrador.especialidad.create');
     }
 
     /**
@@ -46,7 +50,7 @@ class EspecialidadController extends Controller
         $especialidad=Especialidad::findOrFail($id);
         
 
-        return view('especialidad.edit',['especialidad'=>$especialidad]);
+        return view('administrador.especialidad.edit',['especialidad'=>$especialidad]);
     }
 
     /**
@@ -68,8 +72,13 @@ class EspecialidadController extends Controller
 
     public function destroy($id)
    {
-       $persona=Especialidad::findOrFail($id);
-       $persona->delete();
-       return redirect()->route('especialidad.index');
+    $idp=Personal::where('especialidad_id', $id)->pluck('id')->first();
+    if($idp>0){     
+     return redirect()->route('especialidad.index')->with(['message'=>'No se puede eliminar por que otros registros dependen de este elemento ']);
+    }
+    $persona=Especialidad::findOrFail($id);
+    $persona->delete();
+    return redirect()->route('especialidad.index')->with(['messages'=>'Se elimino correctamente']);
+      
    }
 }

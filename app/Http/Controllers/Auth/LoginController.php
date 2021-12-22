@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\login;
+use App\Events\logout;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -23,13 +26,22 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-        if (auth()->user()->rol_id== 3) {
-            return '/vistadecita';
-        }
-        return '/agenda';
-        
+        if (Auth::check() && Auth::user()->rol->nombre==='administrador' ){
+            event(new login(auth()->user()->email));
+            return '/admin/agenda';
+            }
+        if (Auth::check() && Auth::user()->rol->nombre==='medico' ){
+            event(new login(  auth()->user()->email));
+                return '/medico/agenda';
+            
+            }
+        if (Auth::check() && Auth::user()->rol->nombre==='paciente' ){
+            event(new login(  auth()->user()->email));
+                return '/paciente/vistadecita';
+            }  
+               
     }
-
+  
     /**
      * Create a new controller instance.
      *
@@ -37,6 +49,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware('guest')->except('logout');
     }
 }

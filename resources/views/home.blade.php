@@ -63,6 +63,7 @@
     <div class="row justify-content-center py-5">
           <div class="col-xl-8">
               <h2 class="text-center text-uppercase fw-600">Ten tu consulta en pocos pasos</h2>
+              <p style="background-color: white; font-size: 20px; font-weight: 700; text-align: center">Horario de atencion {{$horario[0]->horainicio}} AM a {{$horario[0]->horafin}} PM</p>
         <hr class="separator-linea bg-primary mx-auto"/>
           </div>
       </div>
@@ -87,6 +88,7 @@
   
     </div>
   </section>
+
   <br>
   <section> 
     <div class="row">
@@ -130,4 +132,5 @@
         </div>
     </section>
 </footer>
+
 @endsection

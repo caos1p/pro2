@@ -30,4 +30,12 @@ class Personal extends Model
     {
         return $this->hasMany(Agenda::class,'personal_id');
     }
+    public function citamedica()
+    {
+        return $this->hasMany(Citamedica::class,'personal_id');
+    }
+    public function diagnostico()
+    {
+        return $this->hasMany(Diagnostico::class,'personal_id');
+    }
 }

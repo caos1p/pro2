@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Horario;
+use App\Models\Personal;
 use Illuminate\Http\Request;
 
 class HorarioController extends Controller
-{
+{  public function __construct()
+	{
+		$this->middleware('auth');
+	} 
     public function index()
     {
         $horario=Horario::all();
 
-        return view('horario.index',['horario'=>$horario]);
+        return view('administrador.horario.index',['horario'=>$horario]);
     }
 
     /**
@@ -21,7 +25,7 @@ class HorarioController extends Controller
      */
     public function create()
     {
-        return view('horario.create');
+        return view('administrador.horario.create');
     }
 
     /**
@@ -45,7 +49,7 @@ class HorarioController extends Controller
     { 
         $horario=Horario::findOrFail($id);
 
-        return view('horario.edit',['horario'=>$horario]);
+        return view('administrador.horario.edit',['horario'=>$horario]);
     }
 
     /**
@@ -67,9 +71,16 @@ class HorarioController extends Controller
 
 
     public function destroy($id)
-   {
-       $persona=Horario::findOrFail($id);
-       $persona->delete();
-       return redirect()->route('horario.index');
+   {     
+    $idp=Personal::where('horario_id', $id)->pluck('id')->first();
+    if($idp>0){     
+     return redirect()->route('horario.index')->with(['message'=>'No se puede eliminar por que otros registros dependen de este elemento ']);
+    }
+     $persona=Horario::findOrFail($id);
+     $persona->delete();
+     return redirect()->route('horario.index')->with(['messages'=>'Se elimino correctamente']);
+
+
+
    }
 }

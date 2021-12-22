@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cargo;
+use App\Models\Citamedica;
 use App\Models\Paciente;
 use App\Models\Rol;
 use App\Models\User;
@@ -176,7 +177,7 @@ class ApiloginController extends Controller
       'email'=>$request->email,
       'password'=>bcrypt($request->password),
       'tipo'=>'paciente',
-      'rol_id'=>21,
+      'rol_id'=>5,
     ];
     $user=User::create($datosusuario);
     $datospaciente=[
@@ -205,34 +206,35 @@ class ApiloginController extends Controller
         
       ], 201);  
      }
-     public function registrohorario(Request $request)
+     public function registrocita(Request $request)
      {
-         $usuario=Validator::make($request->all(),[
+         $cita=Validator::make($request->all(),[
        
            'title'=>'required',
            'start'=>'required',
            'end'=>'required',
+           'paciente_id'=>'required',
+
          
           
          ]);
         
-      if ($usuario->fails()){
+      if ($cita->fails()){
   
-          return response()->json($usuario->errors()->toJson(),400);
+          return response()->json($cita->errors()->toJson(),400);
       }
-     $datosusuario=[
-       'name'=>$request->nombre,
-       'email'=>$request->email,
-       'password'=>bcrypt($request->password),
-       'tipo'=>'paciente',
-       'rol_id'=>21,
+     $datoscita=[
+       'title'=>$request->nombre,
+       'fecha'=>$request->email,
+       'hota'=>($request->password),
+       'paciente_id'=>'paciente',
      ];
-     $user=User::create($datosusuario);
+     $cita=Citamedica::create($datoscita);
 
       return response()->json([
         
-          'messaje' =>'usuario registrado' ,
-          'user' =>$user ,
+          'messaje' =>'cita se ha registrado' ,
+          'cita' =>$cita ,
          
    
          

@@ -31,4 +31,20 @@ class Paciente extends Model
     {
         return $this->hasMany(Diagnostico::class,'paciente_id');
     }
+    public function citamedica()
+    {
+        return $this->hasMany(Citamedica::class,'paciente_id');
+    }
+    public function antecedentepersonal()
+    {
+        return $this->hasMany(Antecedente::class,'paciente_id');
+    }
+    public function antecedentefamiliar()
+    {
+        return $this->hasMany(Antecedentefamiliar::class,'paciente_id');
+    }
+    public function archivo()
+    {
+        return $this->hasMany(Archivo::class,'paciente_id');
+    }
 }

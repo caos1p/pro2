@@ -1,13 +1,18 @@
 @extends('layaut')
 
 @section('contenido')
+@if(session('message'))
+<div class="alert alert-primary" id="alert" style="text-align: center">
+    {{ session('message') }}
+</div>
+@endif
 <br>
 <body background="https://media.istockphoto.com/photos/black-stethoscope-on-blue-background-picture-id1179610553?k=20&m=1179610553&s=612x612&w=0&h=5K_35veKTFsS4KEe2piat8EP_9nizrUuPrltqBhW5bw=">
     
 </body>
 <div class="container">
 <div class="row"  style="color: white">
-    
+  
     <div class="col-sm-4"></div>
 <div class=" col-sm-4" style="background-color:  rgb(1, 16, 31)">
 <div class="row" style="align-content: center">
@@ -21,7 +26,7 @@
     <div class="row " style="width: 100%;">
     <div class="col-12" style="text-align: left" >
        <h5> Email:  <i class="bi bi-envelope"></i></h5>
-       <input required  style="color: rgb(17, 16, 16);font-size: 25px;width: 100%;border-color: rgb(247, 244, 244)" id="email" type="email" class="validate" name="email" placeholder="">
+       <input required  style="color: rgb(17, 16, 16);font-size: 25px;width: 100%;border-color: rgb(247, 244, 244)" id="email" type="text" class="validate" name="email" placeholder="">
 
     </div>
        <br>
@@ -60,3 +65,8 @@
 
 </div>
 @endsection
+<script>
+   window.setTimeout(function() { $("#alert").alert('close'); }, 5000);
+ 
+ </script>
+ 

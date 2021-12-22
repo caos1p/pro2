@@ -26,105 +26,32 @@
 
 
    
-    <title></title>
   </head>
+<title>H.salud</title>
 
 
-  <body>
-    @if (auth()->guest())
-    <nav class=" ">
-      <div class="container-fluid" style="text-align: left" >
-        <a class="nav-link active" aria-current="page" href="/">  <img src="https://media.istockphoto.com/vectors/medical-cross-icon-vector-illustration-design-vector-id1178345163?b=1&k=20&m=1178345163&s=612x612&w=0&h=1vQuBstoEoYLEg3QxCLh2TMoE_pl8t-P1wHE-8lxAZ8=" alt="" width="80" height="64"></a>
-    </div>
-  </nav> 
-      @endif
-
-@can('isPaciente')
-<nav class=" ">
-  <div class="container-fluid" style="text-align: left" >
-    <a  style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;font-size: 20px;text-align: left" class="btn btn-sm btn-light" aria-current="page" href="/logout">CERRAR SESION</a>
-  </div>
-</nav>
-@endcan
-
-      @can('isMedico')
-      @if (auth()->check())
-
-    <nav class=" navbar-light  " style="background-color: rgb(255, 255, 255)">
-    
-      <div class="container-fluid">
- 
-    
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-          <div class="offcanvas-header" style="background-color: rgb(8, 8, 8)">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="text-align: center;color: white;font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">Bienvenido 
-              :   {{auth()->user()->name}}</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <h1 style="text-align: center">.................................</h1>
-
-          <div class="offcanvas-body" style="font-size: 20px;font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;background-color: rgb(247, 241, 241)">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-        
-
- 
-         
-            
-              <li class="nav-item dropdown dropend" >
-                <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Usuario
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown" style="text-align: center">
-                  <li><a class="dropdown-item" href="/usuario">Usuario</a> </li>  
-                  <li><a class="dropdown-item"  href="/paciente">Paciente</a></li>
-                  <li ><a class="dropdown-item"   href="/personal">Personal</a></li>          
-                  <li ><a class="dropdown-item"   href="/horario">Horario</a></li>                  
-        
-                </ul>
-              </li>
-
-              <li class="nav-item dropdown dropend">
-                <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Servicios y especialidades
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown" style="text-align: center">
-                  <li><a class="dropdown-item" href="/especialidad">Especialidad</a></li>
-                </ul>
-              </li>
-
-              <li class="nav-item dropdown dropend">
-                <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Consulta medica
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown"style="text-align: center">
-                  <li><a class="dropdown-item"   href="/agenda">Agenda</a></li>  
-                </ul>
-              </li>
-
-              <li class="nav-item dropdown dropend">
-                <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Control y Seguriidad
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown"style="text-align: center">
-                  <li ><a class="dropdown-item" href="/rol">Rol</a></li>  
-                </ul>
-              </li>
-              <br>
-              <br>
-<hr>
-         
-       <li class="nav-item" >
-        <a class="dropdown-item"  href="/logout ">Cerrar Sesion</a>
-      </li>  
-            </ul>
-           
-          </div>
-        </div>
+    <body onload="mueveReloj()">
+      @if (auth()->guest())
+      <nav class=" ">
+        <div class="row">
+        <div class="col 6" style="text-align: left" >
+          <a class="nav-link active" aria-current="page" href="/">  <img src="https://media.istockphoto.com/vectors/medical-cross-icon-vector-illustration-design-vector-id1178345163?b=1&k=20&m=1178345163&s=612x612&w=0&h=1vQuBstoEoYLEg3QxCLh2TMoE_pl8t-P1wHE-8lxAZ8=" alt="" width="80" height="64"></a>
       </div>
-    </nav>       @endif @endcan
+      
+   
+      
+      <div class="col 6" style="text-align: right;margin: 1% " >
+  
+    <form name="form_reloj">
+    <input type="text" name="reloj" size="20" style="color: #0000ffff ;color: rgb(7, 6, 6);border: 0;text-align: center"  disabled>
+    </form>
+  </div>
+  </div>
+  
+    
+  
+    </nav> 
+        @endif 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <!-- Optional JavaScript; choose one of the two! -->
@@ -145,7 +72,20 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
-
+<script language="JavaScript">
+  function mueveReloj(){
+      momentoActual = new Date()
+      hora = momentoActual.getHours()
+      minuto = momentoActual.getMinutes()
+      segundo = momentoActual.getSeconds()
+  
+      horaImprimible = hora + " : " + minuto + " : " + segundo
+  
+      document.form_reloj.reloj.value = horaImprimible
+  
+      setTimeout("mueveReloj()",1000)
+  }
+</script>
    @yield('contenido')
   </body>
 </html>

@@ -17,10 +17,10 @@ class CreateDiagnosticoTable extends Migration
             $table->id();
             $table->string('diagnostico');
             $table->timestamps();
-            $table->unsignedBigInteger('recetamedica_id')->nullable() ;
-            $table->unsignedBigInteger('paciente_id')->nullable() ;
-            $table->foreign('paciente_id')->on('paciente')->references('id')->onDelete('cascade');
-            $table->foreign('recetamedica_id')->on('recetamedica')->references('id')->onDelete('cascade');
+            $table->unsignedBigInteger('personal_id')->nullable() ;
+            $table->unsignedBigInteger('citamedica_id')->nullable() ;
+            $table->foreign('citamedica_id')->on('citamedica')->references('id')->onDelete('cascade');
+            $table->foreign('personal_id')->on('personal')->references('id')->onDelete('cascade');
         });
     }
 

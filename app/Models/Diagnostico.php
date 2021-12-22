@@ -14,12 +14,16 @@ class Diagnostico extends Model
     {
         return $this->hasMany(Agenda::class,'diagnostico_id');
     }
-    public function Recetamedica()
+    public function recetamedica()
     {
-        return $this->belongsTo(Recetamedica::class,'recetamedica_id');
+        return $this->hasMany(Recetamedica::class,'diagnostico_id');
     }
-    public function paciente()
+    public function personal()
     {
-        return $this->belongsTo(Paciente::class,'paciente_id');
+        return $this->belongsTo(Personal::class,'personal_id');
+    }
+    public function citamedica()
+    {
+        return $this->belongsTo(Citamedica::class,'citamedica_id');
     }
 }

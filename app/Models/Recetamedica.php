@@ -12,6 +12,7 @@ class Recetamedica extends Model
 
     public function diagnostico()
     {
-        return $this->hasMany(Diagnostico::class,'recetamedica_id');
+        return $this->belongsTo(Diagnostico::class,'diagnostico_id');
+
     }
 }

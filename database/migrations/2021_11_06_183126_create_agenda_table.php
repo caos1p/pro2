@@ -17,13 +17,7 @@ class CreateAgendaTable extends Migration
             $table->id();
             $table->string( 'detalle');
             $table->timestamps();
-            $table->unsignedBigInteger('citamedica_id')->nullable() ;
-            $table->unsignedBigInteger('personal_id')->nullable() ;
-            $table->unsignedBigInteger('diagnostico_id')->nullable() ;
-            
-            $table->foreign('citamedica_id')->on('citamedica')->references('id')->onDelete('cascade');
-            $table->foreign('personal_id')->on('personal')->references('id')->onDelete('cascade');
-            $table->foreign('diagnostico_id')->on('diagnostico')->references('id')->onDelete('cascade');
+         
         });
     }
 

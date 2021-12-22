@@ -37,6 +37,8 @@ Route::group([
     Route::post('me', [ApiloginController::class, 'me'])-> name('me');
     Route::post('register', [ApiloginController::class, 'register'])-> name('register');
     Route::post('registropaciente', [ApiloginController::class, 'registropaciente'])-> name('registropaciente');
+    Route::post('registrocita', [ApiloginController::class, 'registrocita'])-> name('registrocita');
+
 
 
 });

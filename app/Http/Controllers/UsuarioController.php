@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\crearusuario;
-use App\Events\editarusuario;
-use App\Events\ediusuario;
-use App\Events\eliminarusuario;
-use App\Http\Requests\UsuarioRequest;
-use App\Models\cargo;
-use App\Models\persona;
+use App\Events\editarhorariodeatencion;
+use App\Models\Horadetrabajo;
+use App\Models\Paciente;
+use App\Models\Personal;
 use App\Models\Rol;
 use App\Models\User;
 use Carbon\Carbon;
-use CreatePersonasTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
+  
     /**
      * Display a listing of the resource.
      *
@@ -27,48 +24,34 @@ class UsuarioController extends Controller
 
     public function indexpaciente()
     {
-        $errors=User:: where('tipo', 'paciente')-> orderBy('id','desc')-> paginate(10);
-        return view('usuario.indexpaciente',['errors'=>$errors]);  
+        $errors=User:: where('tipo', 'paciente')-> orderBy('id','asc')-> paginate(10);
+        return view('administrador.usuario.indexpaciente',['errors'=>$errors]);  
     }
     public function indexmedico()
-    {   $errors=User:: where('tipo','<>', 'paciente')-> orderBy('id','desc')-> paginate(10);
+    {   $errors=User:: where('tipo','<>', 'paciente')-> orderBy('id','asc')-> paginate(10);
        
-        return view('usuario.indexmedico',['errors'=>$errors]);
+        return view('administrador.usuario.indexmedico',['errors'=>$errors]);
+     
+    }
+    public function indexusuario()
+    {   $email=auth()->user()->email;
+        $id=auth()->user()->id;
+         $usuario=User:: where('email', $email)->get();
+         $persona=Personal:: where('usuario_id',   $id)->get();
+         $usuario->load('rol');
+        return view('usuario.usuario.indexusuario',['usuario'=>$usuario,'persona'=>$persona]);
+     
+    }
+    public function indexadmin()
+    {   $email=auth()->user()->email;
+         $usuario=User:: where('email', $email)->get();
+         $horario=Horadetrabajo::all();
+         $usuario->load('rol');
+        return view('administrador.usuario.indexadmin',['horario'=>$horario,'usuario'=>$usuario]);
      
     }
     
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
-        $rol=Rol::all();
-        return view('usuario.create',['rol'=>$rol]);
-
-    }
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request) 
-    {
-       
-
-        $users=new User();
-        $users->name= $request->input('nombre');
-        $users->email= $request->input('email');
-        $users->tipo='medico';
-        $users->password=bcrypt($request->input('password'));
-        $users->save();
-        return redirect()->route('/');
-    }
+    
 
 
     /**
@@ -82,25 +65,14 @@ class UsuarioController extends Controller
       
         $personas=User::findOrFail($id);
         $personas->load('persona');
-        return view('usuario.show',['personas'=>$personas]);
+        return view('administrador.usuario.show',['personas'=>$personas]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
-    {
-       /* $users=DB::table('users')
-        ->where('id','=',$id)
-        ->select('users.*')
-        ->first();
-        return view('usuario.edit',['users'=>$users]);;*/
-        $personas=User::findOrFail($id);
-        $rol=Rol::all();
-        return view('usuario.edit',['personas'=>$personas,'rol'=>$rol]);
+    { 
+        $usuario=User::findOrFail($id);
+        
+
+        return view('usuario.usuario.edit',['usuario'=>$usuario]);
     }
 
     /**
@@ -111,44 +83,104 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-       /* $persona= persona::findOrFail($id);
-        $persona->name=$request->input('name');
-        $persona->apellido=$request->input('apellido');
-        $persona->tipo_documento=$request->input('tipo_documento');
-        $persona->N_documento=$request->input('N_docuemento');
-        $persona->direccion=$request->input('direccion');
-        $persona->telefono=$request->input('telefono');
-        $persona->email=$request->input('email');
+    {    if (Auth::check() && Auth::user()->rol->nombre==='administrador' ){
 
-        $persona->tipo=1;
-        $persona->save();*/
-
-        $users=User::findOrFail($id);
-        $users->name=$request->input('nombre');
+         $users=User::findOrFail($id);
+        $users->name= $request->input('name');
         $users->email=$request->input('email');
-        $users->tipo='personal';
+        $users->tipo='administrador';
+        $users->rol_id=8;
+        if($request->input('nuevopassword')){
+
+            if($request->input('password')==$request->input('nuevopassword')){
+                $users->password=bcrypt($request->input('password'));
+                $users->save();
+                return redirect()->route('usuario.indexadmin')->with(['message'=>'Los datos se guardaron correctamente ']);
+    
+            }  else{
+                return redirect()->route('usuario.indexadmin')->with(['messages'=>'Error no realizo los cambios. Las contraseñas no coinciden intentelo de nuevo ']);
+    
+            }
+    
+         }else{
+            $users->password=bcrypt($request->input('password'));
+            $users->save();
+            return redirect()->route('usuario.indexadmin')->with(['message'=>'Los datos se guardaron correctamente ']);
+         }
+        }else{
+        $users=User::findOrFail($id);
+        $users->name= $request->input('name');
+        $users->email=$request->input('email');
+        $users->tipo='medico';
+        $users->rol_id=2;
+        if($request->input('nuevopassword')){
+
+            if($request->input('password')==$request->input('nuevopassword')){
+                $users->password=bcrypt($request->input('password'));
+                $users->save();
+                return redirect()->route('usuario.indexusuario')->with(['message'=>'Los datos se guardaron correctamente ']);
+    
+            }  else{
+                return redirect()->route('usuario.indexusuario')->with(['messages'=>'Error no realizo los cambios. Las contraseñas no coinciden intentelo de nuevo ']);
+    
+            }
+    
+         }else{
+            $users->password=bcrypt($request->input('password'));
+            $users->save();
+            return redirect()->route('usuario.indexusuario')->with(['message'=>'Los datos se guardaron correctamente ']);
+         }
+     
+        }
+    }
+    public function updatepaciente(Request $request, $id)
+    {
+        $users=User::findOrFail($id);
+        $users->name= $request->input('name');
+        $users->email=$request->input('email');
+        $users->tipo='paciente';
+        $users->rol_id=5;
+        if($request->input('nuevopassword')){
+
+        if($request->input('password')==$request->input('nuevopassword')){
+            $users->password=bcrypt($request->input('password'));
+            $users->save();
+            return redirect()->route('citamedica.vistadecita')->with(['message'=>'Los datos se guardaron correctamente ']);
+
+        }  else{
+            return redirect()->route('citamedica.vistadecita')->with(['messages'=>'Error no realizo los cambios. Las contraseñas no coinciden intentelo de nuevo ']);
+
+        }
+
+     }else{
         $users->password=bcrypt($request->input('password'));
-        $users->rol_id=$request->input('rol_id');  
         $users->save();
-        event(new editarusuario($users));
-        return redirect()->route('usuarioindex',[$users->id]);
+        return redirect()->route('citamedica.vistadecita')->with(['message'=>'Los datos se guardaron correctamente ']);
+     }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $persona=User::findOrFail($id);
-        $persona->delete();
-        return redirect()->route('usuario.index');
+     public function storehora(Request $request)
+     {
+         $hora=new Horadetrabajo();
+         $hora->horainicio=$request->get('horadeentrada');
+         $hora->horafin=$request->get('horadesalida');
+         $hora->save();
+         return redirect()->route('usuario.indexadmin')->with(['message'=>'Los datos se guardaron correctamente ']); 
+ 
+     }
+     public function updatehora(Request $request, $id)
+     {
+         $horario= Horadetrabajo::findOrFail($id);
+         $horario->horainicio=$request->get('horainicio');
+         $horario->horafin=$request->get('horafin');
+         $horario->save();
+         event(new editarhorariodeatencion(  $horario));
+
+         return redirect()->route('usuario.indexadmin')->with(['message'=>'Los datos se guardaron correctamente ']); 
+     }
+ 
+    
     }
-    public function enviar(UsuarioRequest $request)
-    {
-        return redirect()->route('usuarioindex');
-    }
-}
+
+
+
