@@ -12,8 +12,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\ImprimirController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\RecetamedicaController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Models\Citamedica;
@@ -46,6 +48,11 @@ Route::get('/citamedica/{id}', [PacienteController::class, 'createcita'])-> name
 Route::post('/citamedica/{id}', [PacienteController::class, 'storecita'])-> name('citamedica.store');
 Route::post('/paciente', [PacienteController::class, 'store'])-> name('paciente.store');
 
+Route::get('/paypal/pay', [PaymentController::class, 'pagarconpaypal'])-> name('pagarconpaypal');
+Route::get('/paypal/status', [PaymentController::class, 'paypalstatus'])-> name('paypalstatus');
+
+
+
 Route::group([' middleware' => ['auth:admin']], function () {
     Route::prefix('/admin')->group(function () {
 
@@ -63,6 +70,15 @@ Route::group([' middleware' => ['auth:admin']], function () {
       Route::put('/usuario/{id}/hora', [UsuarioController::class, 'updatehora'])-> name('usuariohora.update');
 
       Route::get('/bitacora', [BitacoraController::class, 'index'])-> name('bitacora.index');
+      Route::get('/buscador.bitacora', [BitacoraController::class, 'buscador'])-> name('buscador.bitacora');
+
+
+      Route::get('/reporte', [ReporteController::class, 'index'])-> name('reporte.index');
+      Route::get('/reporte1', [ReporteController::class, 'index1'])-> name('reporte.index1');
+      Route::get('/reporte2', [ReporteController::class, 'index2'])-> name('reporte.index2');
+      Route::get('/imprimirreporte/{fechaini}/fecha/{fechafi}', [imprimirController::class, 'imprimirreporte'])-> name('imprimirreporte');
+      Route::get('/imprimirreporte1/{fechaini}/fecha/{fechafi}', [imprimirController::class, 'imprimirreporte1'])-> name('imprimirreporte1');
+
 
 
 
@@ -85,6 +101,8 @@ Route::group([' middleware' => ['auth:admin']], function () {
      Route::get('/personal/{id}/edit', [PersonalController::class, 'edit'])-> name('personal.edit');
      Route::put('/personal/{id}', [PersonalController::class, 'update'])-> name('personal.update');
      Route::get('/personal/{id}/destroy', [PersonalController::class, 'destroy'])-> name('personal.destroy');
+     Route::get('/buscador.personal', [PersonalController::class, 'buscador'])-> name('buscador.personal');
+
 
 
      Route::get('/rol', [RolController::class, 'index'])-> name('rol.index');

@@ -9,6 +9,14 @@ class Citamedica extends Model
 {
     use HasFactory;
     protected $table='citamedica';
+    protected $fillable = [
+        'title',
+        'start',
+        'end',
+        'paciente_id',
+        'personal_id',
+      
+    ];
 
     public function agenda()
     {

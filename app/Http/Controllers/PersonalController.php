@@ -20,14 +20,18 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
-    {
-        $personal=Personal::all();
+    public function index(Request $request)
+    {  $nombre=$request->get('buscarpaciente');
+        $personal=Personal::where('ci','like','%'.$nombre .'%')->orderBy('id','asc')-> paginate(10);
         $personal->load('usuario');
         $personal->load('especialidad');
         $personal->load('horario');
 
         return view('administrador.personal.index',['personal'=>$personal]);
+
+
+
+      
     }
 
     /**
@@ -134,5 +138,13 @@ class PersonalController extends Controller
         $user->delete();
         return redirect()->route('personal.index')->with(['messages'=>'Se elimino correctamente']);
     }
+    
+    public function buscador(Request $request){
+        $term=$request->get('term');
+        $persona=Personal::where('ci','like','%'.$term .'%')->orderBy('ci','ASC')->select('ci as label')->get();
+        return $persona;
+        
+    }
+
 
 }

@@ -32,7 +32,7 @@ class citamedica
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
          $bitacora=new Bitacora();
-         $bitacora->usuario=$event->email;
+         $bitacora->usuario='cita medica';
          $bitacora->accion='crear cita medica';
          $bitacora->fecha=$date;
          $bitacora->save();

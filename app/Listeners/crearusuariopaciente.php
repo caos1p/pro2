@@ -33,7 +33,7 @@ class crearusuariopaciente
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
         $bitacora=new Bitacora();
-        $bitacora->usuario=$email;
+        $bitacora->usuario='usuario';
         $bitacora->accion='crear usuario rol paciente';
         $bitacora->fecha=$date;
         $bitacora->save();

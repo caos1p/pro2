@@ -32,7 +32,6 @@
             <th>Telefono</th>
             <th>EMAIL</th>
             <th>Genero</th>
-            <th>Fecha de nacimiento</th>
             <th>Direccion</th>
             <th>Pais</th>
             <th>ACCIONES</th>
@@ -49,12 +48,11 @@
              <td>{{$error->telefono}}</td>
              <td>{{$error->email}}</td>
              <td>{{$error->genero}}</td>
-             <td>{{$error->fechadenacimiento}}</td>
              <td>{{$error->direccion}}</td>
              <td>{{$error->pais}}</td>
           
              <td style="padding: 5pt 0%">
-              <a class="btn btn-danger btn-sm" style="" href="{{route('historial.showinterrogatorio',[$error->id])}}">Historial</a>                         
+              <a class="btn btn-danger btn-sm" style="" href="">Historial</a>                         
              </td>
            </tr>
           @endforeach

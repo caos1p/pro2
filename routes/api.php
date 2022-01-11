@@ -38,6 +38,22 @@ Route::group([
     Route::post('register', [ApiloginController::class, 'register'])-> name('register');
     Route::post('registropaciente', [ApiloginController::class, 'registropaciente'])-> name('registropaciente');
     Route::post('registrocita', [ApiloginController::class, 'registrocita'])-> name('registrocita');
+    Route::get('mostrarcita/{email}', [ApiloginController::class, 'mostrarcita'])-> name('mostrarcita');
+    Route::get('mostrarcitas', [ApiloginController::class, 'mostrarcitas'])-> name('mostrarcitas');
+    Route::get('mostrarespecialidad', [ApiloginController::class, 'mostrarespecialidad'])-> name('mostrarespecialidad');
+    Route::get('mostrarcita/{email}', [ApiloginController::class, 'mostrarcita'])-> name('mostrarcita');
+    Route::get('mostrarusuario/{email}', [ApiloginController::class, 'mostrarusuario'])-> name('mostrarusuario');
+    Route::get('mostrarusuario1/{email}', [ApiloginController::class, 'mostrarusuario1'])-> name('mostrarusuario1');
+
+    Route::put('editarusuario/{email}', [ApiloginController::class, 'editarusuario'])-> name('editarusuario');
+    Route::put('updateusuario/{email}', [ApiloginController::class, 'updateusuario'])-> name('updateusuario');
+    Route::put('updateusuario1/{email}', [ApiloginController::class, 'updateusuario1'])-> name('updateusuario1');
+
+    
+
+
+
+
 
 
 

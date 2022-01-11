@@ -8,6 +8,7 @@ use App\Models\Citamedica;
 use App\Models\Diagnostico;
 use App\Models\Personal;
 use App\Models\Recetamedica;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -46,5 +47,34 @@ public function enviaremailreceta($id)
     return redirect()->route('historial.showdiagnostico',[$cita[0]->id])->with(['message'=>'El email se ha enviado correctamente']);
 
 
+}
+public function imprimirreporte($fechaini,$fechafi)
+{
+    $date = Carbon::now();
+       $date = $date->format('Y-m-d');
+    if ( $fechaini!=1){
+        $proforma=Citamedica::where('start','>=', $fechaini)->where('start','<=', $fechafi)->  orderBy('id','desc')-> paginate(7);
+    $proforma->load('paciente');
+    $pdf = \PDF::loadView('administrador.reporte.vistaimprimir', ['proforma'=>$proforma,'date'=>$date]);
+    return $pdf->stream('archivo.pdf');
+}
+$proforma=Citamedica::orderBy('id','desc')-> paginate(7);
+$proforma->load('paciente');
+$pdf = \PDF::loadView('administrador.reporte.vistaimprimir', ['proforma'=>$proforma,'date'=>$date]);
+return $pdf->stream('archivo.pdf');
+}
+public function imprimirreporte1($fechaini,$fechafi)
+{
+    $date = Carbon::now();
+    if ( $fechaini!=1){
+        $proforma=Compra::where('created_at','>=', $fechaini)->where('created_at','<=', $fechafi)->  orderBy('id','desc')-> paginate(7);
+    $proforma->load('proveedor');
+    $pdf = \PDF::loadView('reporte.vistaimprimirfactura', ['proforma'=>$proforma,'date'=>$date]);
+    return $pdf->stream('archivo.pdf');
+}
+$proforma=Compra:: orderBy('id','desc')-> paginate(7);
+$proforma->load('proveedor');
+$pdf = \PDF::loadView('reporte.vistaimprimirfactura', ['proforma'=>$proforma,'date'=>$date]);
+return $pdf->stream('archivo.pdf');
 }
 }

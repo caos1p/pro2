@@ -1,6 +1,12 @@
 @extends('paciente.layaut.layaut')
 
 @section('contenido')
+
+@if(session('message'))
+<div class="alert alert-info" id="alert">
+    {{ session('message') }}
+</div>
+@endif
 <h3 style="text-align: center"> formulario de creacion</h3>
    <div class="container-sm">
        
@@ -151,4 +157,8 @@
       changeYear: true
     });
   } );
+  </script>
+  <script>
+    window.setTimeout(function() { $("#alert").alert('close'); }, 5000);
+  
   </script>

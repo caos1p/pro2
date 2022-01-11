@@ -28,12 +28,11 @@ class crearpaciente
      * @return void
      */
     public function handle(EventsCrearpaciente $event)
-    {
-        $email=$event->email;
+    {      
                $date = Carbon::now();
        $date = $date->format('Y-m-d');
         $bitacora=new Bitacora();
-        $bitacora->usuario=  $email;
+        $bitacora->usuario= 'paciente' ;
         $bitacora->accion='crear Paciente';
         $bitacora->fecha=$date;
         $bitacora->save();

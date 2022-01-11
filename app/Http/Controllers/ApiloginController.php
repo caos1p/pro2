@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\citamedica as EventsCitamedica;
+use App\Events\crearpaciente;
+use App\Events\crearusuariopaciente;
 use App\Models\Cargo;
 use App\Models\Citamedica;
 use App\Models\Paciente;
+use App\Models\Personal;
 use App\Models\Rol;
 use App\Models\User;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +26,7 @@ class ApiloginController extends Controller
     */
    public function __construct()
    {
-       $this->middleware('auth:api', ['except' => ['login1','register','registropaciente']]);
+       $this->middleware('auth:api', ['except' => ['updateusuario1','mostrarusuario1','updateusuario','mostrarusuario','editarusuario','login1','register','mostrarcitas','mostrarcita','registrocita','registropaciente','mostrarespecialidad']]);
    }
 
    /**
@@ -196,7 +201,9 @@ class ApiloginController extends Controller
       $pacient=Paciente::create($datospaciente);
    
   
-  
+      event(new crearpaciente($paciente));
+      event(new crearusuariopaciente($usuario));
+
      return response()->json([
        
          'messaje' =>'usuario registrado' ,
@@ -213,7 +220,6 @@ class ApiloginController extends Controller
            'title'=>'required',
            'start'=>'required',
            'end'=>'required',
-           'paciente_id'=>'required',
 
          
           
@@ -223,13 +229,20 @@ class ApiloginController extends Controller
   
           return response()->json($cita->errors()->toJson(),400);
       }
+      $idp=Paciente::where('email', $request->paciente_id)->pluck('id')->first();
+
      $datoscita=[
-       'title'=>$request->nombre,
-       'fecha'=>$request->email,
-       'hota'=>($request->password),
-       'paciente_id'=>'paciente',
+       'title'=>$request->title,
+       'start'=>$request->start,
+       'end'=>$request->end,
+       'paciente_id'=> $idp,
+       'personal_id'=> 1,
+
+
+    
      ];
      $cita=Citamedica::create($datoscita);
+     event(new EventsCitamedica($cita));
 
       return response()->json([
         
@@ -240,5 +253,140 @@ class ApiloginController extends Controller
          
        ], 201);  
       }
+      public function editarusuario(Request $request, $email)
+      {
+          $cita=Validator::make($request->all(),[
+        
+            'email'=>'required',
+            'password'=>'required',
+ 
+          
+           
+          ]);
+         
+       if ($cita->fails()){
+   
+           return response()->json($cita->errors()->toJson(),400);
+       }
+       $idu=User::where('email', $email)->pluck('id')->first();
+       $users=User::findOrFail($idu);
+
+ 
+       $datosusuario=[
+        $users->email=>$request->email,
+        $users->password=>bcrypt($request->password),
+
+      ];
+
+      $cita=User::updated($datosusuario);
+ 
+       return response()->json([
+         
+           'messaje' =>'usuario se ha registrado' ,
+           'cita' =>$cita ,
+        ], 201);  
+       }
+       public function mostrarusuario($email)
+       {
+      $usaurio=User::where('email', $email)->get();
+
+  
+        return response()->json(array(
+         'success' => true,
+         'messaje' =>'bien' ,
+         'usuario' =>$usaurio ,
+     ), 200);   
+        }
+ public function updateusuario(Request $request,$email)
+
+{
+    $idu=User::where('email', $email)->pluck('id')->first();
+
+    $user = User::find($idu);
+    $user->email = $request->has('email') ? $request->get('email') : $user->email;
+    $user->save();
+
+    return response()->json([
+        
+        'messaje' =>'cita se ha registrado' ,
+        'cita' =>$user ,      
+     ], 201);       
+}
+public function mostrarusuario1($email)
+{
+$usaurio=User::where('email', $email)->get();
+
+
+ return response()->json(array(
+  'success' => true,
+  'messaje' =>'bien' ,
+  'usuario' =>$usaurio ,
+), 200);   
+ }
+public function updateusuario1(Request $request,$email)
+
+{
+$idu=User::where('email', $email)->pluck('id')->first();
+
+$user = User::find($idu);
+$user->password = bcrypt($request->password);
+
+$user->save();
+
+return response()->json([
+ 
+ 'messaje' =>'cita se ha registrado' ,
+ 'cita' =>$user ,      
+], 201);       
+}
+      public function mostrarcita($email)
+      {
+     $idu=User::where('email', $email)->pluck('id')->first();
+     $idp=Paciente::where('usuario_id', $idu)->pluck('id')->first();
+
+
+      $cita=Citamedica::where('paciente_id', $idp)->get();
+ 
+       return response()->json(array(
+        'success' => true,
+        'messaje' =>'bien' ,
+        'cita' =>$cita ,
+    ), 200);   
+       }
+
+
+       public function mostrarcitas()
+       {
+  
+       $cita=Citamedica::all();
+  
+        return response()->json(array(
+         'success' => true,
+         'messaje' =>'bien' ,
+         'cita' =>$cita ,
+     ), 200);   
+        }
+        public function mostrarespecialidad()
+        {
+   
+            $especial=Personal::with('especialidad')->get();  
+            $especial->load('horario');
+   
+         return response()->json(array(
+          'success' => true,
+          'messaje' =>'bien' ,
+          'cita' =>$especial ,
+      ), 200);   
+         }
+         public function mostrarhorario($id)
+         {
+         $personal=Citamedica::where('personal_id', $id)->get();
+         return response()->json(array(
+           'success' => true,
+           'messaje' =>'bien' ,
+           'cita' =>$personal ,
+       ), 200);   
+          }
+        
 }
 

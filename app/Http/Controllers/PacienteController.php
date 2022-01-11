@@ -33,7 +33,11 @@ class PacienteController extends Controller
         $paciente=Paciente::where('ci','like','%'.$nombre .'%')->orderBy('id','asc')-> paginate(10);
         $paciente->load('citamedica');
         
-  
+        if (Auth::check() && Auth::user()->rol->nombre==='administrador' ){
+            return view('administrador.paciente.index',['paciente'=>$paciente]);
+
+        }
+
             return view('usuario.paciente.index',['paciente'=>$paciente]);
     }
     public function show()
@@ -77,6 +81,7 @@ class PacienteController extends Controller
         $usuario->rol_id=5;
         $usuario->password=bcrypt($request->input('contraseña'));
         $usuario->save();
+        event(new crearusuariopaciente($usuario));
 
 
         $paciente=new Paciente();
@@ -91,6 +96,8 @@ class PacienteController extends Controller
         $paciente->genero= $request->input('genero');
         $paciente->pais= $request->input('pais');
         $paciente->usuario_id=   $usuario->id;
+        event(new crearpaciente($paciente));
+
         $paciente->save();
 
         
@@ -102,6 +109,7 @@ class PacienteController extends Controller
         $cita->personal_id=$request->input('cita_id');
         $cita->paciente_id=$paciente->id;
         $cita->save();
+        event(new EventsCitamedica($cita));
 
 
 
@@ -160,7 +168,8 @@ class PacienteController extends Controller
         $agenda->start= $fecha;
         $agenda->end=$request->input('hora');
         $agenda->save();
-        return redirect()->route('login')->with(['message'=>'El registro se completo exitosamente. Ingrese sus datos para ver su perfil']);
+
+        return redirect()->route('pagarconpaypal');
 
 
 

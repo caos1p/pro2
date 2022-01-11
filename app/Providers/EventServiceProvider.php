@@ -17,6 +17,7 @@ use App\Events\enviarrecetaagmail;
 use App\Events\exportarapdf;
 use App\Events\login;
 use App\Events\logout;
+use App\Events\pago;
 use App\Events\subirdocumento;
 use App\Listeners\citamedica as ListenersCitamedica;
 use App\Listeners\crearantecedentesfamiliares as ListenersCrearantecedentesfamiliares;
@@ -33,6 +34,7 @@ use App\Listeners\enviarrecetaagmail as ListenersEnviarrecetaagmail;
 use App\Listeners\exportarapdf as ListenersExportarapdf;
 use App\Listeners\login as ListenersLogin;
 use App\Listeners\logout as ListenersLogout;
+use App\Listeners\pago as ListenersPago;
 use App\Listeners\subirdocumento as ListenersSubirdocumento;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -97,6 +99,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         logout::class => [
             ListenersLogout::class,
+        ],
+        pago::class => [
+            ListenersPago::class,
         ],
     ];
 

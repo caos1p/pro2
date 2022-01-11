@@ -65,7 +65,6 @@
                   <li><a class="dropdown-item"  href="/admin/paciente">Paciente</a></li>
                   <li ><a class="dropdown-item"   href="/admin/personal">Personal</a></li>          
                   <li ><a class="dropdown-item"   href="/admin/horario">Horario</a></li>   
-                  <li ><a class="dropdown-item"   href="/admin/horario">Horario De Atencion</a></li>            
          
       
         
@@ -78,17 +77,12 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown" style="text-align: center">
                   <li><a class="dropdown-item" href="/admin/especialidad">Especialidad</a></li>
+                  <li><a class="dropdown-item"   href="/admin/agenda">Agenda</a></li>  
+
                 </ul>
               </li>
 
-              <li class="nav-item dropdown dropend">
-                <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Consulta medica
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown"style="text-align: center">
-                  <li><a class="dropdown-item"   href="/admin/agenda">Agenda</a></li>  
-                </ul>
-              </li>
+         
 
               <li class="nav-item dropdown dropend">
                 <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -96,6 +90,8 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown"style="text-align: center">
                   <li ><a class="dropdown-item" href="/admin/rol">Rol</a></li>  
+                  <li ><a class="dropdown-item"   href="/admin/reporte">Reportes</a></li>                  
+
                   <li ><a class="dropdown-item"   href="/admin/bitacora">Bitacora</a></li>                  
 
                 </ul>
